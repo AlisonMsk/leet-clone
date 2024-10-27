@@ -9,10 +9,15 @@ import { useState } from "react";
 
 type PlaygroundProps = {
   problem: Problem;
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Playground: React.FC<PlaygroundProps> = ({ problem }) => {
+const Playground: React.FC<PlaygroundProps> = ({ problem, setSuccess }) => {
   const [activeTestCaseId, setActiveTestCaseId] = useState<number>(0);
+
+  const handleSubmit = () => {
+    setSuccess(true);
+  };
 
   return (
     <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden">
@@ -75,8 +80,9 @@ const Playground: React.FC<PlaygroundProps> = ({ problem }) => {
           </div>
         </div>
       </Split>
-      <EditorFooter />
+      <EditorFooter handleSubmit={handleSubmit} />
     </div>
   );
 };
+
 export default Playground;
