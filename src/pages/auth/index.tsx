@@ -7,10 +7,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Navbar from "@/components/NavBar/Navbar";
+import useHasMounted from "@/hooks/useHasMounted";
 
 type AuthPageProps = {};
 
 const AuthPage: React.FC<AuthPageProps> = () => {
+  const hasMounted = useHasMounted();
+
   const authModal = useRecoilValue(authModalState);
   const [user, loading, error] = useAuthState(auth);
   const [pageLoading, setPageLoading] = useState(true);
@@ -22,6 +25,8 @@ const AuthPage: React.FC<AuthPageProps> = () => {
   }, [user, router, loading]);
 
   if (pageLoading) return null;
+
+  if (!hasMounted) return null;
 
   return (
     <div className="bg-gradient-to-b from-gray-600 to-black h-screen relative">

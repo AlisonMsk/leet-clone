@@ -1,4 +1,5 @@
 import { firestore } from "@/firebase/firebase";
+import useHasMounted from "@/hooks/useHasMounted";
 import { doc, setDoc } from "firebase/firestore";
 
 import React, { useState } from "react";
@@ -18,7 +19,11 @@ const INPUTS_INITIAL_VALUE = {
 };
 
 const NewProblem: React.FC<NewProblemProps> = () => {
+  const hasMounted = useHasMounted();
+
   const [inputs, setInputs] = useState(INPUTS_INITIAL_VALUE);
+
+  if (!hasMounted) return null;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
